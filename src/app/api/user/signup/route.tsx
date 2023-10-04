@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next"
 import { NextResponse } from "next/server"
 import connectMongo from "../../database/database"
 import { User } from "../../database/models/user.model"
+import { addUser } from "../services"
 
 type ResponseData = {
     success: number,
@@ -39,21 +40,18 @@ export async function GET(
     console.log(username, password)
 
     // inserting the data into mongodb
-    try {   
-        await connectMongo();
-        const user = await User.create({
-            username: username,
-            password: password
-        })
+    try {
+        let user = await addUser(username, password)
         return NextResponse.json({
             success: 1,
-            message: "successfully added user",
+            message: "Successfully added user",
             data: user
         })
-    } catch(error) {
+    }catch(error: any){
+        
         return NextResponse.json({
             success: 0,
-            message: "Database Error Failed to add user",
+            message: error.message,
             data: undefined
         })
     }
