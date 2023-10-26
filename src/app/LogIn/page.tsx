@@ -1,8 +1,11 @@
 'use client'
 
-import { GreyButton, NavBar } from "@/app/components/components"
-import { TextInput } from "@/app/components/components"
+import { GreyButton, NavBar } from "@/app/utlis/components/components"
+import { TextInput } from "@/app/utlis/components/components"
 import { useState } from "react"
+import { UserService } from "../utlis/services/user-services"
+import { User } from "../utlis/models/user"
+import cookieCutter from "cookie-cutter"
 
 export default function LogIn(): JSX.Element {
 
@@ -15,9 +18,26 @@ export default function LogIn(): JSX.Element {
         }else if(password == ""){
             alert("please enter your password")
         }else{
-            alert("backend is not ready")
+            loginUser()
         }
     }
+
+    const loginUser = async () => {
+        const userService = new UserService()
+        let user = await userService.logInUser(username, password)
+        if(user == undefined) {
+            alert("Unable to login user")
+            return
+        }
+        console.log(user)
+        setCookies(user)
+    }
+
+    const setCookies = async (user: User) => {
+        cookieCutter.set("username", user.username)
+        cookieCutter.set("token", user.token)
+    }
+
     return(
         <main>
             <NavBar/>

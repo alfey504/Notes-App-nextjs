@@ -1,8 +1,8 @@
 'use client'
 
-import { GreyButton, NavBar, TextInput } from "@/app/components/components";
+import { GreyButton, NavBar, TextInput } from "@/app/utlis/components/components";
 import { useState } from "react";
-import { UserService } from "../services/user-services";
+import { UserService } from "../utlis/services/user-services";
 
 export default  function LogIn(): JSX.Element {
 
@@ -31,7 +31,7 @@ export default  function LogIn(): JSX.Element {
             alert("Error signing you up")
             return
         }
-        window.location.href = "/"
+        window.location.href = "/LogIn"
     }
 
     return(

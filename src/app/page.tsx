@@ -1,6 +1,6 @@
 'use client'
 
-import { GreyButton } from "@/app/components/components"
+import { GreyButton } from "@/app/utlis/components/components"
 
 export default function Home() {
   return (
